@@ -14,7 +14,7 @@ class LabeledDataset:
 
     def __init__(self, path):
         """Opens the labeled dataset file at the given path."""
-        self.file = h5py.File(path)
+        self.file = h5py.File(path, 'r')
         self.color_maps = self.file['images']
         self.depth_maps = self.file['depths']
 
@@ -35,4 +35,4 @@ class LabeledDataset:
         depth_image = Image.fromarray(depth_map, mode='F')
         depth_image = rotate_image(depth_image)
 
-        return color_image, depth_image
+        return np.array(color_image), np.array(depth_image)
