@@ -9,3 +9,8 @@ More specifically, the files the test code will try to load are:
 
 - At least one part of the raw dataset, as `*.zip` files
   (for example, download and place `cafe.zip` here)
+
+
+Official train/test split: https://cs.nyu.edu/~silberman/projects/indoor_scene_seg_sup.html
+
+wget http://horatio.cs.nyu.edu/mit/silberman/indoor_seg_sup/splits.mat
