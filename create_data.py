@@ -33,7 +33,7 @@ def create_output_dirs():
 def create_data(dataset, data_type, indices):
     frame_index = 0
     for id in tqdm(indices):
-        color, depth = dataset[id.item()]
+        color, depth = dataset[id.item() - 1]
         image_name = "{:3d}.jpg".format(frame_index)
         plt.imsave(OUTPUT_DIR / data_type / 'image' / image_name, color)
         plt.imsave(OUTPUT_DIR / data_type / 'depth' / image_name, depth)
