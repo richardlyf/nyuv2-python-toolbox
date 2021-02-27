@@ -4,6 +4,7 @@ from pathlib import Path
 from nyuv2 import *
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy.io as sio
 
 DATASET_DIR = Path('dataset')
 
@@ -19,7 +20,13 @@ def plot_depth(ax, depth, title="Depth"):
 
     ax.axis('off')
     ax.set_title(title)
-    ax.imshow(depth, cmap='Spectral')
+    ax.imshow(depth / np.max(depth), cmap='Spectral')
+
+def load_train_test_split():
+    file = sio.loadmat(DATASET_DIR / 'splits.mat')
+    train_idxs = file['trainNdxs']
+    test_idxs = file['testNdxs']
+    return train_idxs, test_idxs
 
 def test_labeled_dataset():
     labeled = LabeledDataset(DATASET_DIR / 'nyu_depth_v2_labeled.mat')
@@ -64,4 +71,4 @@ def test_raw_dataset():
     plt.show()
 
 test_labeled_dataset()
-test_raw_dataset()
+# test_raw_dataset()
