@@ -4,12 +4,12 @@ from PIL import Image
 def load_depth_image(path):
     """Loads an unprocessed depth map extracted from the raw dataset."""
     with open(path, 'rb') as f:
-        return Image.fromarray(read_pgm(f), mode='I')
+        return read_pgm(f)
 
 def load_color_image(path):
     """Loads an unprocessed color image extracted from the raw dataset."""
     with open(path, 'rb') as f:
-        return Image.fromarray(read_ppm(f), mode='RGB')
+        return read_ppm(f)
 
 def read_pgm(pgm_file):
     """Reads a PGM file from a buffer.

@@ -22,8 +22,8 @@ class RawDatasetArchive:
         The frame parameter must be a pair of depth and color maps from
         the archive. Optionally the path of an extraction directory can be given.
         """
-
-        return map(lambda name: self.zip.extract(name, path=path), frame)
+        for name in frame:
+            self.zip.extract(name, path=path)
 
 def synchronise_frames(frame_names):
     """Constructs a list of synchronised depth and RGB frames.
