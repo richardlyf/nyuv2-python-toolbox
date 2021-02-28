@@ -44,5 +44,6 @@ def read_ppm(ppm_file):
     width, height = int(width), int(height)
 
     data = np.fromfile(ppm_file, dtype=np.uint8, count=width*height*3)
-
+    if len(data) != width*height*3:
+        return None
     return data.reshape(height, width, 3)

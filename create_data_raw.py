@@ -43,9 +43,13 @@ def main():
                 color = load_color_image(color_full_path)    
                 # (480, 640, 3)
                 # save color image and remove the unziped image file
-                plt.imsave(image_name, color)
                 os.system('rm ' + str(color_full_path))
-            
+                if color is not None:
+                    plt.imsave(image_name, color)
+                else:
+                    archive[folder].remove(frame)
+                    continue
+                
             # Ignore the first and last frame when counting for data split
             if frame_id != 0 or frame_id != len(raw_archive) - 1:
                 data_split.append("{} {}".format(folder, frame_id))
