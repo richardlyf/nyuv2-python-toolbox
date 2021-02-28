@@ -9,7 +9,10 @@ def load_depth_image(path):
 def load_color_image(path):
     """Loads an unprocessed color image extracted from the raw dataset."""
     with open(path, 'rb') as f:
-        return read_ppm(f)
+        try:
+            return read_ppm(f)
+        except:
+            return None
 
 def read_pgm(pgm_file):
     """Reads a PGM file from a buffer.
