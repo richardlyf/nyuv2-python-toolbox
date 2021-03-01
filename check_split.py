@@ -21,8 +21,9 @@ def main():
     fpath = os.path.join(args.split_path, "{}_files.txt")
     split_paths = [fpath.format(e) for e in ["train", "val", "test"]]
     for split_path in split_paths:
+        print("Checking ", split_path)
         with open(split_path, 'r') as f:
-            for line in f:
+            for line in tqdm(f):
                 folder, frame_id = line.split()
                 frames = archive[folder]
                 for i in [-1, 0, 1]:
