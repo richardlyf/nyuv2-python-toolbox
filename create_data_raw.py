@@ -51,7 +51,7 @@ def main():
                     continue
                 
             # Ignore the first and last frame when counting for data split
-            if frame_id != 0 or frame_id != len(raw_archive) - 1:
+            if frame_id != 0 and frame_id != len(raw_archive) - 1:
                 data_split.append("{} {}".format(folder, frame_id))
 
     np.save("nyu_archive", archive, allow_pickle=True)
