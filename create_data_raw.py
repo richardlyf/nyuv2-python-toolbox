@@ -30,7 +30,7 @@ def main():
     for zip_path in DATASET_DIR.glob('*.zip'):
         raw_archive = RawDatasetArchive(zip_path)
         folder = os.path.basename(str(zip_path))[:-4] 
-        archive[folder] = raw_archive.frames
+        archive[folder] = raw_archive.frames.copy()
         frame_count = 0
         for frame_id, frame in tqdm(enumerate(raw_archive)):
             depth_path, color_path = Path('.') / frame[0], Path('.') / frame[1]
