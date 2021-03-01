@@ -25,6 +25,7 @@ def main():
         with open(split_path, 'r') as f:
             for line in tqdm(f):
                 folder, frame_id = line.split()
+                frame_id = int(frame_id)
                 frames = archive[folder]
                 for i in [-1, 0, 1]:
                     image_name = frames[frame_id + i]
