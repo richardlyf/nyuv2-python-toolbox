@@ -51,10 +51,12 @@ def main():
                     archive[folder].remove(frame)
                     continue
                 
-            # Ignore the first and last frame when counting for data split
-            if frame_id != 0 and frame_id != len(raw_archive) - 1:
+            # Ignore the first frame when counting for data split
+            if frame_id != 0:
                 data_split.append("{} {}".format(folder, frame_count))
             frame_count += 1
+        # Ignore the last valid frame when counting for data split
+        data_split.pop(-1)
 
     np.save("nyu_archive", archive, allow_pickle=True)
     # Break data into train, val, and test files
