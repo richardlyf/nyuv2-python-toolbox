@@ -31,6 +31,7 @@ def main():
         raw_archive = RawDatasetArchive(zip_path)
         folder = os.path.basename(str(zip_path))[:-4] 
         archive[folder] = raw_archive.frames
+        frame_count = 0
         for frame_id, frame in tqdm(enumerate(raw_archive)):
             depth_path, color_path = Path('.') / frame[0], Path('.') / frame[1]
             color_full_path = DATASET_DIR / folder / color_path
@@ -52,7 +53,8 @@ def main():
                 
             # Ignore the first and last frame when counting for data split
             if frame_id != 0 and frame_id != len(raw_archive) - 1:
-                data_split.append("{} {}".format(folder, frame_id))
+                data_split.append("{} {}".format(folder, frame_count))
+            frame_count += 1
 
     np.save("nyu_archive", archive, allow_pickle=True)
     # Break data into train, val, and test files

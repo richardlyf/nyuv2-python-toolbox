@@ -28,7 +28,7 @@ def main():
                 frame_id = int(frame_id)
                 frames = archive[folder]
                 for i in [-1, 0, 1]:
-                    image_name = frames[frame_id + i]
+                    image_name = frames[frame_id + i][1][:-3] + '.jpg'
                     full_image_path = DATASET_DIR / folder / image_name
                     if not os.path.exists(full_image_path):
                         print(full_image_path, " doesn't exist. frame_id: ", frame_id, " i: ", i)
