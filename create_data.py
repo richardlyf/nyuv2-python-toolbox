@@ -16,33 +16,31 @@ args = parser.parse_args()
 
 DATASET_DIR = Path(args.data_path)
 OUTPUT_DIR = Path(args.output_path)
-
-def load_train_test_split():
-    file = sio.loadmat(DATASET_DIR / 'splits.mat')
-    train_idxs = file['trainNdxs']
-    test_idxs = file['testNdxs']
-    return train_idxs, test_idxs
-
-def create_output_dirs():
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    os.makedirs(OUTPUT_DIR / 'train/image', exist_ok=True)
-    os.makedirs(OUTPUT_DIR / 'train/depth', exist_ok=True)
-    os.makedirs(OUTPUT_DIR / 'test/image', exist_ok=True)
-    os.makedirs(OUTPUT_DIR / 'test/depth', exist_ok=True)
-
-def create_data(dataset, data_type, indices):
-    frame_index = 0
-    for id in tqdm(indices):
-        color, depth = dataset[id.item() - 1]
-        image_name = "{:3d}.jpg".format(frame_index)
-        plt.imsave(OUTPUT_DIR / data_type / 'image' / image_name, color)
-        plt.imsave(OUTPUT_DIR / data_type / 'depth' / image_name, depth)
-        frame_index += 1
         
-if __name__ == '__main__':
-    create_output_dirs()
+def main():
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    os.makedirs(OUTPUT_DIR / 'image', exist_ok=True)
+    os.makedirs(OUTPUT_DIR / 'depth', exist_ok=True)
     labeled_dataset = LabeledDataset(DATASET_DIR / 'nyu_depth_v2_labeled.mat')
-    train_idxs, test_idxs = load_train_test_split()
-    create_data(labeled_dataset, 'train', train_idxs)
-    create_data(labeled_dataset, 'test', test_idxs)
+
+    test_file = []
+    frame_index = 0
+    for i in tqdm(range(len(labeled_dataset))):
+        color, depth = labeled_dataset[i]
+        image_name = "{:3d}.jpg".format(i)
+        depth_name = "{:3d}.npy".format(i)
+        plt.imsave(OUTPUT_DIR / 'image' / image_name, color)
+        np.save(OUTPUT_DIR / 'depth' / depth_name, depth, allow_pickle=True)
+        frame_index += 1
+        break
+        test_file.append("{} {}".format('image', i))
+
+    print("Saving split files")
+    with open('test_files.txt', 'w') as f:
+        for item in test_file:
+            f.write("%s\n" % item)
+    print("Done")
     labeled_dataset.close()
+
+if __name__ == '__main__':
+    main()
