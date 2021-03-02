@@ -16,7 +16,7 @@ args = parser.parse_args()
 
 DATASET_DIR = Path(args.data_path)
 OUTPUT_DIR = Path(args.output_path)
-        
+
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     os.makedirs(OUTPUT_DIR / 'image', exist_ok=True)
@@ -32,7 +32,6 @@ def main():
         plt.imsave(OUTPUT_DIR / 'image' / image_name, color)
         np.save(OUTPUT_DIR / 'depth' / depth_name, depth, allow_pickle=True)
         frame_index += 1
-        break
         test_file.append("{} {}".format('image', i))
 
     print("Saving split files")
